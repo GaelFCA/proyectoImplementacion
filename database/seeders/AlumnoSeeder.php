@@ -37,9 +37,9 @@ class AlumnoSeeder extends Seeder
             ],
             [
                 'numero_cuenta' => '320567431',
-                'nombre' => 'Diego',
-                'a_paterno' => 'Castillo',
-                'a_materno' => 'Vargas',
+                'nombre' => 'Gabriela',
+                'a_paterno' => 'Pacheco',
+                'a_materno' => 'Galvez',
                 'creditos' => 112,
                 'semestre' => 2,
                 'regularidad' => false,
