@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('nombre', 100);
             $table->integer('semestre');
             $table->string('tipo', 20);
-            $table->foreignId('plan_trabajo_id')->constrained('planes_trabajo');
+            $table->foreignId('plan_trabajo_id')->unique()->constrained('planes_trabajo')->cascadeOnDelete();
             $table->foreignId('carrera_id')->constrained('carreras');
             $table->timestamps();
         });

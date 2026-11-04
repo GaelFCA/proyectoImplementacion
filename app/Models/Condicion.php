@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Condicion extends Model
 {
@@ -13,8 +14,12 @@ class Condicion extends Model
         'descripcion',
     ];
 
-    public function alumnos()
+    /**
+     * Relación Muchos a Muchos con Alumnos que tienen esta condición.
+     */
+    public function alumnos(): BelongsToMany
     {
-        return $this->hasMany(Alumno::class, 'condicion_id');
+        return $this->belongsToMany(Alumno::class, 'alumno_condicion', 'condicion_id', 'alumno_numero_cuenta')
+            ->withTimestamps();
     }
 }

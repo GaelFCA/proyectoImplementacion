@@ -3,8 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany; 
-
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class PlanTrabajo extends Model
 {
@@ -15,8 +14,11 @@ class PlanTrabajo extends Model
         'url',
     ];
 
-    public function materias()
+    /**
+     * Relación 1 a 1 con Materia.
+     */
+    public function materia(): HasOne
     {
-        return $this->hasMany(Materia::class, 'plan_trabajo_id');
+        return $this->hasOne(Materia::class, 'plan_trabajo_id');
     }
 }

@@ -19,8 +19,6 @@ return new class extends Migration
             $table->integer('creditos');
             $table->integer('semestre');
             $table->boolean('regularidad')->default(true);
-            $table->foreignId('materia_id')->constrained('materias');
-            $table->foreignId('condicion_id')->constrained('condiciones');
             $table->foreignId('carrera_id')->constrained('carreras');
             $table->timestamps();
 

@@ -7,18 +7,23 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class JefeCarrera extends Model
 {
-    protected $table = 'jefe_carreras'; // dice a que tbla hace referencia daba error por poner carreras en plural 
-    protected $primaryKey = 'numero_trabajador'; // indica cual es la llave primaria porqu eno se uso id 
-    public $incrementing = false; //desactiva autoincremento
+    protected $table = 'jefe_carreras'; // tabla a la que hace referencia
+    protected $primaryKey = 'numero_trabajador'; // llave primaria no autoincremental
+    public $incrementing = false; // desactiva autoincremento
     protected $keyType = 'string'; // indica que la llave no es entero 
 
     protected $fillable = [
         'numero_trabajador',
         'nombre',
+        'a_paterno',
+        'a_materno',
         'carrera_id',
     ];
 
-    public function carrera()
+    /**
+     * Relación 1 a 1 con la Carrera que dirige.
+     */
+    public function carrera(): BelongsTo
     {
         return $this->belongsTo(Carrera::class, 'carrera_id');
     }
