@@ -9,6 +9,12 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Filament\Tables\Filters\TrashedFilter;
+use Filament\Infolists\Infolist;
+use Filament\Infolists\Components\Section;
+use Filament\Infolists\Components\TextEntry;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class PlanTrabajoResource extends Resource
 {
@@ -35,39 +41,55 @@ class PlanTrabajoResource extends Resource
     }
 
     public static function table(Table $table): Table
+{
+    return $table
+        ->columns([
+            Tables\Columns\TextColumn::make('id')
+                ->label('#')
+                ->sortable()
+                ->toggleable(), // Permite alternar la columna
+            
+            Tables\Columns\TextColumn::make('descripcion')
+                ->label('Descripción')
+                ->wrap()
+                ->searchable()
+                ->action(
+                    Tables\Actions\ViewAction::make()
+                        ->modalHeading('Vista de plan trabajo')
+                        ->infolist([
+                            Section::make('Detalles del Plan de Trabajo')
+                                ->schema([
+                                    TextEntry::make('id')->label('ID'),
+                                    TextEntry::make('descripcion')->label('Descripción')->columnSpanFull(),
+                                    TextEntry::make('url')
+                                        ->label('Enlace')
+                                        ->color('primary')
+                                        ->url(fn (PlanTrabajo $record): string => $record->url, true),
+                                ])->columns(2),
+                        ])
+                ),
+            
+            Tables\Columns\TextColumn::make('url')
+                ->label('Enlace / URL')
+                ->color('primary')
+                ->searchable()
+                ->url(fn (PlanTrabajo $record): string => $record->url, true)
+                ->toggleable(), // Permite alternar la columna
+        ])
+        ->filters([
+            TrashedFilter::make(), 
+        ])
+        ->actions([
+            Tables\Actions\EditAction::make()->hiddenLabel()->tooltip('Editar'),
+            Tables\Actions\RestoreAction::make()->hiddenLabel()->tooltip('Restaurar'),
+        ])
+        ->bulkActions([]);
+}
+    public static function getEloquentQuery(): Builder
     {
-        return $table
-            ->columns([
-                Tables\Columns\TextColumn::make('id')
-                    ->label('#')
-                    ->sortable(),
-                
-                Tables\Columns\TextColumn::make('descripcion')
-                    ->label('Descripción')
-                    ->wrap() 
-                    ->searchable(),
-                
-                Tables\Columns\TextColumn::make('url')
-                    ->label('Enlace / URL')
-                    ->copyable() 
-                    ->searchable(),
-            ])
-            ->filters([
-                // Filtros vacíos para no causar error de SoftDeletes
-            ])
-            ->actions([
-                Tables\Actions\EditAction::make()
-                    ->hiddenLabel() // Quita la palabra "Editar"
-                    ->tooltip('Editar'),
-                    
-                Tables\Actions\DeleteAction::make()
-                    ->hiddenLabel() // Quita la palabra "Borrar"
-                    ->tooltip('Eliminar'),
-            ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
+        return parent::getEloquentQuery()
+            ->withoutGlobalScopes([
+                SoftDeletingScope::class,
             ]);
     }
 
