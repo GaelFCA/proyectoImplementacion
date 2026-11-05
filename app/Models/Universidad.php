@@ -4,9 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Universidad extends Model
 {
+    use SoftDeletes;
+
     protected $table = 'universidades';
 
     protected $fillable = [
@@ -17,12 +20,12 @@ class Universidad extends Model
         'tipo',
     ];
 
-    //convierte el estado convenio a booleano cuando lo recibes 
+    
     protected $casts = [
         'estado_convenio' => 'boolean',
     ];
 
-    public function carreras()
+    public function carreras(): HasMany
     {
         return $this->hasMany(Carrera::class, 'universidad_id');
     }
