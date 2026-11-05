@@ -27,7 +27,7 @@ class CondicionResource extends Resource
 
     protected static ?string $pluralModelLabel = 'Condiciones';
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-check-badge';
 
     public static function form(Form $form): Form
     {
