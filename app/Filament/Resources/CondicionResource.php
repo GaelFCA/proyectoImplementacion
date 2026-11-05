@@ -23,6 +23,10 @@ class CondicionResource extends Resource
 {
     protected static ?string $model = Condicion::class;
 
+    protected static ?string $modelLabel = 'Condición';
+
+    protected static ?string $pluralModelLabel = 'Condiciones';
+
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     public static function form(Form $form): Form
@@ -127,8 +131,7 @@ class CondicionResource extends Resource
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\RestoreBulkAction::make(),
-                    Tables\Actions\ForceDeleteBulkAction::make(),
+                    
                 ]),
             ]);
     }
