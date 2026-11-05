@@ -1,0 +1,5 @@
+{"type":"commit_made","sha":"eef8c6688414f64b2dfd0ba10405b749ed711c18","message_first_line":"Resource de Jefe de Carrera","files":0,"ts":"2026-11-05T02:26:41.740811300Z"}
+{"type":"commit_made","sha":"20ef7d780cdb69ccd7c70dff85c9fe0a5c257756","message_first_line":"Agregamos el panel predeterminado de filament","files":0,"ts":"2026-11-05T02:26:41.740817200Z"}
+{"type":"commit_made","sha":"8481ed001dc691d2af3907bfe64a7bc17bc2ded9","message_first_line":"Ajuste de modelo de datos, relaciones M:M","files":0,"ts":"2026-11-05T02:26:41.740818400Z"}
+{"type":"file_opened","path":"[REDACTED_PATH]","ts":"2026-11-05T02:26:42.555Z"}
+{"type":"snippet_selected","path":"[REDACTED_PATH]","lines":[1,1],"ts":"2026-11-05T02:26:42.562Z"}
