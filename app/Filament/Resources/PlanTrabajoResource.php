@@ -9,12 +9,18 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Filament\Tables\Filters\TrashedFilter;
+use Filament\Infolists\Infolist;
+use Filament\Infolists\Components\Section;
+use Filament\Infolists\Components\TextEntry;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class PlanTrabajoResource extends Resource
 {
     protected static ?string $model = PlanTrabajo::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-briefcase'; 
+    protected static ?string $navigationIcon = 'heroicon-o-briefcase';
     protected static ?string $navigationLabel = 'Planes de Trabajo';
     protected static ?string $pluralModelLabel = 'Planes de Trabajo';
 
@@ -34,6 +40,23 @@ class PlanTrabajoResource extends Resource
             ]);
     }
 
+    // Configuración de la ventana emergente (Infolist) con enlace clickeable funcional
+    public static function infolist(Infolist $infolist): Infolist
+    {
+        return $infolist
+            ->schema([
+                Section::make('Detalles del Plan de Trabajo')
+                    ->schema([
+                        TextEntry::make('id')->label('ID'),
+                        TextEntry::make('descripcion')->label('Descripción')->columnSpanFull(),
+                        TextEntry::make('url')
+                            ->label('Enlace')
+                            ->url(fn ($record) => $record->url, true) // Hace que el texto dentro del modal también sea un link interactivo
+                            ->color('primary'),
+                    ])->columns(2),
+            ]);
+    }
+
     public static function table(Table $table): Table
     {
         return $table
@@ -42,32 +65,45 @@ class PlanTrabajoResource extends Resource
                     ->label('#')
                     ->sortable(),
                 
+                // Al hacer clic en la descripción abre la ventana emergente (Infolist)
                 Tables\Columns\TextColumn::make('descripcion')
                     ->label('Descripción')
-                    ->wrap() 
-                    ->searchable(),
+                    ->wrap()
+                    ->searchable()
+                    ->action(
+                        Tables\Actions\ViewAction::make()
+                    ),
                 
+                // Enlace interactivo en la tabla que abre en otra pestaña de forma segura
                 Tables\Columns\TextColumn::make('url')
                     ->label('Enlace / URL')
-                    ->copyable() 
+                    ->url(fn (PlanTrabajo $record): string => $record->url)
+                    ->openUrlInNewTab()
+                    ->color('primary')
                     ->searchable(),
             ])
             ->filters([
-                // Filtros vacíos para no causar error de SoftDeletes
+                TrashedFilter::make(), 
             ])
             ->actions([
-                Tables\Actions\EditAction::make()
-                    ->hiddenLabel() // Quita la palabra "Editar"
-                    ->tooltip('Editar'),
-                    
-                Tables\Actions\DeleteAction::make()
-                    ->hiddenLabel() // Quita la palabra "Borrar"
-                    ->tooltip('Eliminar'),
+                // Quitamos el ViewAction independiente porque la descripción ya abre el modal (Adiós al icono del ojo)
+                Tables\Actions\EditAction::make()->hiddenLabel()->tooltip('Editar'),
+                Tables\Actions\RestoreAction::make()->hiddenLabel()->tooltip('Restaurar'),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
+                    Tables\Actions\ForceDeleteBulkAction::make(),
+                    Tables\Actions\RestoreBulkAction::make(),
                 ]),
+            ]);
+    }
+
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()
+            ->withoutGlobalScopes([
+                SoftDeletingScope::class,
             ]);
     }
 
