@@ -5,9 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Alumno extends Model
 {
+    use SoftDeletes;
+
     protected $table = 'alumnos';
     protected $primaryKey = 'numero_cuenta'; // indica cual es la llave primaria
     public $incrementing = false; // desactiva autoincremento
