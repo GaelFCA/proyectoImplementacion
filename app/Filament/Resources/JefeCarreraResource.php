@@ -22,6 +22,8 @@ class JefeCarreraResource extends Resource
 {
     protected static ?string $model = JefeCarrera::class;
 
+        protected static ?string $pluralModelLabel = 'Jefes de carrera';
+
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     public static function form(Form $form): Form
@@ -78,13 +80,13 @@ class JefeCarreraResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make() ->iconButton(),
                 Tables\Actions\ViewAction::make()->extraAttributes(['class' => 'hidden']),
 
-                Tables\Actions\DeleteAction::make()
-                    ->label('Eliminar')
+                /*Tables\Actions\DeleteAction::make()
+                    ->make()->iconButton()
                     ->modalHeading('¿Eliminar jefe de carrera?')
-                    ->modalDescription('¿Estás seguro?') // Ojo: cambiaste modalDescription por modalHeading en tu línea 87
+                    ->modalDescription('¿Estás seguro?')*/
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
