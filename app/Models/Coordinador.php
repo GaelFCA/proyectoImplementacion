@@ -18,9 +18,7 @@ class Coordinador extends Model
         'a_materno',
     ];
 
-    /**
-     * Obtiene el coordinador único del sistema.
-     */
+    
     public static function getCoordinadorGeneral(): ?self
     {
         return static::query()->first();

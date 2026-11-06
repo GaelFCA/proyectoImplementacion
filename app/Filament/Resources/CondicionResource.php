@@ -3,12 +3,10 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\CondicionResource\Pages;
-use App\Filament\Resources\CondicionResource\RelationManagers;
 use App\Models\Condicion;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
-use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Filament\Infolists\Infolist;
@@ -34,12 +32,15 @@ class CondicionResource extends Resource
         return $form
             ->schema([
                 Forms\Components\TextInput::make('nombre')
-                    ->placeHolder('Regularidad')
+                    ->label('Nombre')
+                    ->placeholder('Regularidad')
+                    
                     ->required(),
                 Forms\Components\Textarea::make('descripcion')
+                    ->label('Descripción')
                     ->required()
-                    ->helperText('Describe de que trata tu condicion')
-                    ->placeHolder('El alumno no tiene materias reprobadas y cumple con los creditos actuales a su semestre segun la planeacion')
+                    ->helperText('Describe de qué trata la condición')
+                    ->placeholder('El alumno no tiene materias reprobadas y cumple con los créditos actuales a su semestre según la planeación')
                     ->columnSpanFull(),
             ]);
     }
@@ -59,7 +60,7 @@ class CondicionResource extends Resource
                             ->label('Nombre'),
 
                         TextEntry::make('descripcion')
-                            ->label('Descripcion'),
+                            ->label('Descripción'),
                     ]),
             ]);
     }

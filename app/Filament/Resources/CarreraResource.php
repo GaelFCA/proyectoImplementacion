@@ -20,7 +20,7 @@ class CarreraResource extends Resource
 {
     protected static ?string $model = Carrera::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-academic-cap';
+    protected static ?string $navigationIcon = 'heroicon-o-building-library';
     protected static ?string $navigationLabel = 'Carreras';
     protected static ?string $pluralModelLabel = 'Carreras';
 

@@ -16,9 +16,6 @@ class Condicion extends Model
         'descripcion',
     ];
 
-    /**
-     * Relación Muchos a Muchos con Alumnos que tienen esta condición.
-     */
     public function alumnos(): BelongsToMany
     {
         return $this->belongsToMany(Alumno::class, 'alumno_condicion', 'condicion_id', 'alumno_numero_cuenta')

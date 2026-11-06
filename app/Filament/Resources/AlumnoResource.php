@@ -3,7 +3,6 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\AlumnoResource\Pages;
-use App\Filament\Resources\AlumnoResource\RelationManagers;
 use App\Models\Alumno;
 use App\Models\Materia;
 use Filament\Forms;
@@ -46,17 +45,27 @@ class AlumnoResource extends Resource
                         ])
                     ->disabled(fn (string $operation): bool => $operation === 'edit'),
                 Forms\Components\TextInput::make('nombre')
+                    ->label('Nombre')
+                    ->maxLength(20)
                     ->required(),
                 Forms\Components\TextInput::make('a_paterno')
+                    ->label('Apellido paterno')
+                    ->maxLength(20)
                     ->required(),
                 Forms\Components\TextInput::make('a_materno')
+                    ->label('Apellido materno')
+                    ->maxLength(20)
                     ->required(),
                 Forms\Components\TextInput::make('creditos')
-                    ->required()
-                    ->numeric(),
+                    ->label('Créditos')
+                    ->minValue(0)
+                    ->numeric()
+                    ->required(),
                 Forms\Components\TextInput::make('semestre')
-                    ->required()
-                    ->numeric(),
+                    ->label('Semestre')
+                    ->minValue(1)
+                    ->numeric()
+                    ->required(),
                 Forms\Components\Toggle::make('regularidad')
                     ->required(),
                 Forms\Components\Select::make('carrera_id')
@@ -175,7 +184,8 @@ class AlumnoResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('nombre_completo')
                     ->label('Nombre del alumno')
-                    ->sortable()
+                    ->sortable(['nombre', 'a_paterno', 'a_materno'])
+                    ->searchable(['nombre', 'a_paterno', 'a_materno'])
                     ->getStateUsing(fn($record) => "{$record->nombre} {$record->a_paterno} {$record->a_materno}"),
                 Tables\Columns\TextColumn::make('creditos')
                     ->numeric()

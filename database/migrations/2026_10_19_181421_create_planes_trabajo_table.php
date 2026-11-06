@@ -16,11 +16,6 @@ return new class extends Migration
             $table->text('descripcion');
             $table->text('url');
             $table->timestamps();
-<<<<<<< HEAD
-            $table->softDeletes();
-=======
-            
->>>>>>> feature/Carreras
         });
     }
 

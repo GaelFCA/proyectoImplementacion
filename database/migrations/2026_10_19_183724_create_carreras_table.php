@@ -17,7 +17,6 @@ return new class extends Migration
             $table->integer('duracion');
             $table->foreignId('universidad_id')->constrained('universidades');
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 

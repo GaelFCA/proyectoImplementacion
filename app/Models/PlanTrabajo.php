@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class PlanTrabajo extends Model
@@ -16,4 +17,10 @@ class PlanTrabajo extends Model
         'descripcion',
         'url',
     ];
+
+    
+    public function materia(): HasOne
+    {
+        return $this->hasOne(Materia::class, 'plan_trabajo_id');
+    }
 }

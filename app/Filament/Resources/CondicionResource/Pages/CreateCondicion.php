@@ -3,12 +3,11 @@
 namespace App\Filament\Resources\CondicionResource\Pages;
 
 use App\Filament\Resources\CondicionResource;
-use Filament\Actions;
 use Filament\Resources\Pages\CreateRecord;
 
 class CreateCondicion extends CreateRecord
 {
-    protected static ?string $title = 'Agregar nueva condicion';
+    protected static ?string $title = 'Agregar nueva condición';
     protected static bool $canCreateAnother = false;
     protected static string $resource = CondicionResource::class;
 
@@ -19,6 +18,6 @@ class CreateCondicion extends CreateRecord
 
     protected function getCreatedNotificationTitle(): ?string
     {
-        return 'Condicion agregada exitosamente';
+        return 'Condición agregada exitosamente';
     }
 }

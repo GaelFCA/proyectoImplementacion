@@ -3,7 +3,6 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\UniversidadResource\Pages;
-use App\Filament\Resources\UniversidadResource\RelationManagers;
 use App\Helpers\UniversidadHelper;
 use App\Models\Universidad;
 use Filament\Forms;
@@ -124,6 +123,14 @@ class UniversidadResource extends Resource
             ->recordUrl(null)
             ->recordAction(Tables\Actions\ViewAction::class)
             ->filters([
+                Tables\Filters\SelectFilter::make('tipo')
+                    ->label('Tipo de universidad')
+                    ->options(UniversidadHelper::tipos()),
+                Tables\Filters\TernaryFilter::make('estado_convenio')
+                    ->label('Convenio')
+                    ->placeholder('Todos')
+                    ->trueLabel('Con convenio')
+                    ->falseLabel('Sin convenio'),
                 Tables\Filters\TrashedFilter::make(),
             ])
             ->actions([
